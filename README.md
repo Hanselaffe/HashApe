@@ -13,7 +13,8 @@ HashApe is intended for local educational use and authorized recovery/testing on
 - corrects SHA-256 identification text;
 - removes the historical duplicate-work threading behavior while keeping a compatibility wrapper;
 - adds bounded input handling and clearer errors;
-- adds a lowercase canonical `hashape.py` entry point while retaining `Hashape.py` for compatibility;
+- uses `hashape_core.py` for the canonical implementation so the repository works correctly on case-insensitive Windows filesystems;
+- retains `Hashape.py` as the historical command-line entry point;
 - adds standard-library unit tests;
 - requires no third-party Python packages.
 
@@ -24,13 +25,13 @@ HashApe is intended for local educational use and authorized recovery/testing on
 ## Run
 
 ```bash
-python hashape.py
+python Hashape.py
 ```
 
-The historical command also continues to work:
+The implementation can also be imported directly:
 
-```bash
-python Hashape.py
+```python
+import hashape_core
 ```
 
 ## Tests
