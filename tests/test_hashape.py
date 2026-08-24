@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import hashape
+import hashape_core as hashape
 
 
 class HashApeTests(unittest.TestCase):
