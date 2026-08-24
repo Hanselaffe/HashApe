@@ -1,32 +1,54 @@
-# HashApe 🐒🔐
+# HashApe
 
-**HashApe** is a powerful command-line tool designed for cracking hashes. It supports both **Brute-Force** and **Dictionary Attacks**, and can also identify the hash algorithm based on the hash length.
+HashApe is a small local Python utility for learning about hexadecimal password hashes, verifying candidate plaintexts, performing bounded demonstration searches, and checking a local wordlist.
 
-## Features
+## Scope
 
-- **Brute-Force Attack**: Tries to guess the password by systematically going through all possible combinations of characters.
-- **Dictionary Attack**: Searches through a wordlist for the matching password.
-- **Hash Algorithm Identification**: Determines the hash type based on the length of the given hash.
+HashApe is intended for local educational use and authorized recovery/testing only. It does not perform network authentication attempts and it deliberately avoids optimized cracking engines.
 
-## Installation
+## Changes in the 2026 refresh
 
-To use **HashApe**, follow these steps:
+- fixes the broken dictionary lookup path;
+- validates algorithms and hexadecimal digest input;
+- corrects SHA-256 identification text;
+- removes the historical duplicate-work threading behavior while keeping a compatibility wrapper;
+- adds bounded input handling and clearer errors;
+- uses `hashape_core.py` for the canonical implementation so the repository works correctly on case-insensitive Windows filesystems;
+- retains `Hashape.py` as the historical command-line entry point;
+- adds standard-library unit tests;
+- requires no third-party Python packages.
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/hanselaffe/HashApe.git
-    ```
+## Requirements
 
-2. Navigate to the project directory:
-    ```bash
-    cd HashApe
-    ```
+- Python 3.10 or newer
 
-3. Ensure Python 3 is installed.
-
-## Usage
-
-Run the tool in the terminal:
+## Run
 
 ```bash
-python hashape.py
+python Hashape.py
+```
+
+The implementation can also be imported directly:
+
+```python
+import hashape_core
+```
+
+## Tests
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+## Supported hashing operations
+
+The active verification/search functions support:
+
+- MD5
+- SHA-256
+
+Hash identification additionally reports length-based candidates for SHA-1 and SHA-512. A digest length is only a hint and cannot prove which algorithm produced a value.
+
+## Safety and performance
+
+The built-in brute-force demonstration is intentionally simple, local, single-process, and bounded to short candidate lengths. For real password storage, use a modern password-hashing scheme such as Argon2id, scrypt, or bcrypt rather than fast general-purpose hashes such as MD5 or SHA-256.
